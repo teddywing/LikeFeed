@@ -26,7 +26,25 @@ var label1 = Titanium.UI.createLabel({
 	width:'auto'
 });
 
+// Don't forget to set your appid and requested permissions, else the login button
+// won't be effective.
+Titanium.Facebook.appid = '258369447595838';
+Titanium.Facebook.permissions = ['publish_stream'];
+Titanium.Facebook.addEventListener('login', function(e) {
+    if (e.success) {
+        alert('Logged in');
+    }
+});
+Titanium.Facebook.addEventListener('logout', function(e) {
+    alert('Logged out');
+});
+
+// add the button.  Note that it doesn't need a click event or anything.
+var fb_button = Titanium.Facebook.createLoginButton({ top: 50, style: 'wide' });
+//Titanium.UI.currentWindow.add();
+
 win1.add(label1);
+win1.add(fb_button);
 
 //
 // create controls tab and root window
