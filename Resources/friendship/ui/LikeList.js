@@ -58,7 +58,8 @@
 		*/
 		
 		Ti.API.addEventListener( "processPosts", function( list ) {
-			//Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
+			if( list.list.length == 0 )
+				Ti.UI.createAlertDialog( {title:"Sorry, but the request returned 0 items."} ).show();
 			for ( key in list.list ) {
 				ll_view.appendRow( create_row( list.list[key] ) );
 			}
