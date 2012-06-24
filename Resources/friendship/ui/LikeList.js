@@ -30,6 +30,13 @@
 		return row;
 	}
 	
+	fs.ui.addItems = function( list )
+	{
+		for ( key in list.list ) {
+			Ti.API.info( list.list[key] );
+		}
+	}
+	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
 		
@@ -42,6 +49,8 @@
 		
 		ll_view.appendRow( create_row( 'OMG, I like totally like Skrillex.') );
 		ll_view.appendRow( create_row( 'Seriously, this is amazing.  You totally need to party.') );
+		
+		Ti.API.addEventListener( "processPosts", fs.ui.addItems );
 		
 		return ll_view;
 	};

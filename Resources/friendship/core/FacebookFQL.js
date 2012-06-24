@@ -24,13 +24,15 @@
 	fs.core.handleAllFriendPostsFQL = function(result) {
 		if (result.success) {
 			var postsList = JSON.parse(result.result);
-			Ti.API.fireEvent("processPosts", postsList);
-			/*
+
+			/*			
 			Ti.API.info(postsList.length);
 			Ti.API.info(postsList[0].name);
 			Ti.API.info(postsList[0].page_id);
 			Ti.API.info(postsList[0].website);
 			*/
+
+			Ti.API.fireEvent("processPosts", {list:postsList});
 		} else if (result.error) {
 			//Ti.API.info("ERROR: " + result.error); // TODO: remove
 			Ti.API.fireEvent("processFQLError", {what:result.error});
