@@ -3,6 +3,7 @@
 		var tab_group = Ti.UI.createTabGroup();
 		Ti.UI.currentTabGroup = tab_group;
 		
+//		var login_button = Ti.Facebook.createLoginButton();
 		var refresh_button = Ti.UI.createButton({
 			image: 'images/refresh.png',
 			height: 5
@@ -13,6 +14,7 @@
 			title: 'Sphnx',
     		tabBarHidden: true,
     		leftNavButton: refresh_button
+//    		rightNavButton: login_button
 		});
 		var loading = fs.ui.createLoadingView();
 		win.add(loading);
