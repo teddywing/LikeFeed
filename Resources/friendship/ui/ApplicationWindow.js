@@ -5,9 +5,8 @@
 		
 		var refresh_button = Ti.UI.createButton({
 			image: 'images/refresh.png',
-			width: 10.0,
-			height: 10.0,
-		}); // TODO: figure out how to resize buttons
+			height: 5
+		});
 		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
 		
 		var win = Ti.UI.createWindow({
