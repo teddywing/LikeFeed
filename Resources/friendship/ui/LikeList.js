@@ -233,6 +233,7 @@
 				}
 			}
 
+			ll_view.setData(Array());
 			if (e.data.length > 0) {			
 				var tuples = [];
 	
@@ -253,8 +254,10 @@
 	   			
 	   			ll_view.footerTitle = "0 / " + fs.data.reverseChronoLikedIDs.length + " loaded";
 	   			
+	   			fs.data.isQueryingMore = true;
 	   			fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
 	   		} else {
+	   			fs.data.isQueryingMore = false;
 	   			ll_view.footerTitle = "0 / 0 loaded";
 				Ti.App.fireEvent('app:hide.loader');
 	   		} 
@@ -267,20 +270,24 @@
 			}
 			
   			ll_view.footerTitle = fs.data.numLikesFetched + " / " + fs.data.reverseChronoLikedIDs.length + " loaded";
-			/*
-			if (fs.data.numLikesFetched < fs.data.reverseChronoLikedIDs.length) {
-				fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
-			}
-			*/
-			// TODO: when UI scrolls to bottom, can call this (might need mutex)
+  			fs.data.isQueryingMore = false;
+
 			Ti.App.fireEvent('app:hide.loader');
 		});
 		
-		ll_view.addEventListener("scrollEnd", function(e) {
-			Ti.API.info("scroll ended");
-			Ti.API.info(e.contentOffset.y);
-			Ti.API.info(ll_view.height);
-		});
+		ll_view.addEventListener("scroll", function(e) {
+			if (fs.app.isAndroid && (e.totalItemCount < e.firstVisibleItem + e.visibleItemCount + 3)
+            		|| (!fs.app.isAndroid && (e.contentOffset.y + e.size.height + 100 > e.contentSize.height))) {
+        		if (fs.data.numLikesFetched < fs.data.reverseChronoLikedIDs.length) {
+        			if (!fs.data.isQueryingMore) {
+            			fs.data.isQueryingMore = true;
+						fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
+        			}
+        		} else {
+        			fs.data.isQueryingMore = false;
+        		}
+            }
+	    });
 				
 		return ll_view;
 	};

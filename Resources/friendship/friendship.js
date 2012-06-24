@@ -1,7 +1,9 @@
 var fs = {};
 
+
 (function() {
 	fs.app = {};
+	fs.app.isAndroid = (Ti.Platform.osname === 'android');
 })();
 
 Ti.include(
