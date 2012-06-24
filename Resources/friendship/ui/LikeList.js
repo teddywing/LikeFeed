@@ -57,8 +57,6 @@
 	
 	function create_row( key )
 	{
-		// Ti.UI.createAlertDialog( {title:"key " + key.name} ).show();
-
 		// Reason for Factory: templating format of the row
 		var row = Ti.UI.createTableViewRow();
 
@@ -69,12 +67,6 @@
 			}));
 		});
 		
-			/*		
-			fan_count
-			page_url
-			website
-			*/
-
 		var profile_icon = Ti.UI.createImageView({
 			image:key.pic_square,
 			width:50,
@@ -203,7 +195,7 @@
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
 		
-		add_test_data( ll_view );
+		//add_test_data( ll_view );
 		
 		//Ti.App.fireEvent('app:show.loader');
 		
