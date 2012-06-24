@@ -1,7 +1,5 @@
 Ti.include('/friendship/friendship.js');
 
-Ti.API.info("Running the app - app.js");
-
 fs.app.mainTabGroup = fs.ui.createApplicationTabGroup();
 
 // Login switch
