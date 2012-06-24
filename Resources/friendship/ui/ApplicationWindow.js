@@ -3,19 +3,19 @@
 		var tab_group = Ti.UI.createTabGroup();
 		Ti.UI.currentTabGroup = tab_group;
 		
-		var login_button = Ti.Facebook.createLoginButton();
+//		var login_button = Ti.Facebook.createLoginButton();
 		var refresh_button = Ti.UI.createButton({
 			image: 'images/refresh.png',
-			width: 10.0,
-			height: 10.0,
-		}); // TODO: figure out how to resize buttons
+			height: 5
+		});
 		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
 		
 		var win = Ti.UI.createWindow({
-			//title: 'FriendShip',
+			barColor: fs.ui.styles.navBarColour,
+			title: 'Sphnx',
     		tabBarHidden: true,
-    		leftNavButton: refresh_button,
-    		rightNavButton: login_button, // TODO: remove before deployment
+    		leftNavButton: refresh_button
+//    		rightNavButton: login_button
 		});
 		var loading = fs.ui.createLoadingView();
 		win.add(loading);

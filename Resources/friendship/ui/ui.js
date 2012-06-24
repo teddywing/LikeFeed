@@ -1,5 +1,9 @@
 (function() {
 	fs.ui = {};
+	
+	fs.ui.styles = {
+		navBarColour: '#ac0b24'
+	};
 })();
 
 Ti.include(
