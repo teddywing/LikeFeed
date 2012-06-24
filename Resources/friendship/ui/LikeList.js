@@ -79,7 +79,7 @@
 			image:key.pic_square,
 			width:50,
 			height:50,
-			left:0,
+			left:5,
 			top:0
 		});
 
@@ -101,7 +101,7 @@
 			textAlign:'right',
 			top: 0,
 			opacity:0.65,
-			left: 0,
+			left: 5,
 			height:'12'
 		});
 		fan_c.top = 50-fan_c.height;
@@ -117,17 +117,17 @@
 			width:'auto',
 			textAlign:'left',
 			top:2,
-			left: profile_icon.width + 2,
+			left: profile_icon.width + 12,
 			height:'auto'
 		});
 		 
 		var title = Ti.UI.createLabel({
 			text:key.name,
-			font:{fontSize:12,fontWeight:'bold'},
+			font:{fontSize:16,fontWeight:'bold'},
 			width:'auto',
 			textAlign:'left',
 			top:item_type.height + 2,
-			left: profile_icon.width + 4,
+			left: profile_icon.width + 14,
 			height:'auto',
 			wordWrap:'true'
 		});
@@ -156,11 +156,12 @@
 
 		var description = Ti.UI.createLabel({
 			text:key.description,
-			font:{fontSize:12,fontWeight:'single'},
+			font:{fontSize:14,fontWeight:'single'},
+			height: 15,
 			width:'auto',
 			textAlign:'left',
 			top: title.top + title.height,
-			left:profile_icon.width + 4,
+			left:profile_icon.width + 14,
 			height:'auto',
 			wordWrap:true
 		});
@@ -170,17 +171,23 @@
 		if( description.height > max_height ) description.height = max_height; 
 		
 		
+		var item_view = Ti.UI.createView({
+			height: 'auto',
+			top: 5,
+			bottom: 5
+		});
 
 		row.height = 'auto';
 		
-		row.add( profile_icon );
+		item_view.add( profile_icon );
 		// row.add( thumb_icon );
-		row.add(fan_c);
-		row.add( title );
-		row.add(liked_by);
-		row.add( item_type );
-		row.add( description );
-
+		item_view.add(fan_c);
+		item_view.add( title );
+		item_view.add(liked_by);
+		item_view.add( item_type );
+		item_view.add( description );
+		
+		row.add(item_view);
 		
 		return row;
 	};

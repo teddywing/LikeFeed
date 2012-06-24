@@ -25,8 +25,9 @@
 	fs.ui.createLoginWindow = function() {
 		var tab_group = Ti.UI.createTabGroup();
 		var win = Ti.UI.createWindow({
-			title: 'FriendShip',
-			tabBarHidden: true
+			navBarHidden: true,
+			tabBarHidden: true,
+			backgroundColor: fs.ui.style.navBarColour
 		});
 		var view = Ti.UI.createView({
 			backgroundColor: '#fff'
