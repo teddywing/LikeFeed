@@ -1,6 +1,8 @@
 (function() {
 	fs.ui.createApplicationTabGroup = function() {
 		var tab_group = Ti.UI.createTabGroup();
+		Ti.UI.currentTabGroup = tab_group;
+		
 		var win = Ti.UI.createWindow({
 			title: 'FriendShip',
     		tabBarHidden: true
