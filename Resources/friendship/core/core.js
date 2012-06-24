@@ -1,9 +1,8 @@
 (function() {
 	fs.core = {};
-	fs.data = {};
-	fs.data.friends = Array();
 })();
 
 Ti.include(
-	'/friendship/core/FacebookFQL.js'
+	'/friendship/core/FacebookFQL.js',
+	'/friendship/core/DataManipulation.js'
 )

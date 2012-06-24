@@ -24,13 +24,13 @@
 
 	fs.core.handleLikeIDsFQLResponse = function (result) { fs.core.handleFQLResponse(result, "processLikeIDs"); };
 	fs.core.queryLikeIDsFQL = function(friend_ids) {
-		var query = "SELECT page_id, created_time FROM page_fan WHERE uid IN (" + friend_ids.join() + ")";
+		var query = "SELECT page_id, created_time, uid FROM page_fan WHERE uid IN (" + friend_ids.join() + ")";
 		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleLikeIDsFQLResponse);
 	};
 	
 	fs.core.handleAllFriendLikeIDsFQLResponse = function (result) { fs.core.handleFQLResponse(result, "processLikeIDs"); };
 	fs.core.queryAllFriendLikeIDsFQL = function() {
-		var query = "SELECT page_id, created_time FROM page_fan WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + Ti.Facebook.uid + ")";
+		var query = "SELECT page_id, created_time, uid FROM page_fan WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + Ti.Facebook.uid + ")";
 		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleAllFriendLikeIDsFQLResponse);
 	};
 	
@@ -44,5 +44,14 @@
 		var query = "SELECT page_id, name, description, page_url, pic_square, fan_count, type, website, general_info ";
 		query += "FROM page WHERE page_id IN (" + page_ids.join() + ")";
 		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleLikesFQLResponse);
+	};
+	
+	fs.core.fetchMoreLikes = function(numLikesMore) {
+		numLikesMore = Math.min((fs.data.reverseChronoLikedIDs.length - fs.data.numLikesFetched), numLikesMore);
+		page_ids = Array();
+		for (var i = fs.data.numLikesFetched; i < fs.data.numLikesFetched + numLikesMore; i++) {
+			page_ids.push(fs.data.reverseChronoLikedIDs[i]);
+		}
+		fs.core.queryLikesFQL(page_ids);
 	};
 })();

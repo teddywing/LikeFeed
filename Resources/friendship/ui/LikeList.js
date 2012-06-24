@@ -153,7 +153,11 @@
 		row.add( description );
 		
 		return row;
-	}
+	};
+	
+	function sortLikeIDsByTime(a, b) { // TODO: deprecated
+  		return ((a.time > b.time) ? -1 : ((a.time < b.time) ? 1 : 0));
+	};
 	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
@@ -171,23 +175,72 @@
 		});
 				
 		Ti.API.addEventListener("processLikeIDs", function(e) {
-			Ti.API.info("processLikeIDs");
-			Ti.API.info(e.data);
+			fs.data.likeIDs = Array();
+            fs.data.reverseChronoLikedIDs = Array();
+
 			for ( key in e.data ) {
-				// TODO: 0 go through all the page_ids and insert into a hashset/dictionary; update with latest create_time, and also ++; sort by latest time <- pbly need priority set, or jus filter after fact
-				//e.data[key].page_id
-				//e.data[key].created_time
+				pid = e.data[key].page_id + '';
+				tm = e.data[key].created_time;
+				uid = e.data[key].uid;
+				
+				if (pid in fs.data.likeIDs) {
+					fs.data.likeIDs[pid].count += 1;
+					
+					if (tm >= fs.data.likeIDs[pid].time) {
+						fs.data.likeIDs[pid].time = tm;
+						fs.data.likeIDs[pid].uid = uid;
+					}
+				} else {
+					fs.data.likeIDs[pid] = {count: 1, time: tm, uid: uid};
+				}
 			}
-			
-			// TODO: disable the hide loader, and start slowly loading processLikes
-			Ti.App.fireEvent('app:hide.loader');
+
+			if (e.data.length > 0) {			
+				var tuples = [];
+	
+				for (var key in fs.data.likeIDs) {
+					tuples.push([key, fs.data.likeIDs[key]]);
+				}
+				tuples.sort(function(a, b) {
+	    			a = a[1].time;
+	    			b = b[1].time;
+	    			return a < b ? 1 : (a > b ? -1 : 0);
+				});
+	
+				for (var i = 0; i < tuples.length; i++) {
+					fs.data.reverseChronoLikedIDs.push(tuples[i][0]);
+					//Ti.API.info(tuples[i][0] + ' ' + tuples[i][1].time);
+	   			}
+	   			fs.data.numLikesFetched = 0;
+	   			
+	   			ll_view.footerTitle = "0 / " + fs.data.reverseChronoLikedIDs.length + " loaded";
+	   			
+	   			fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
+	   		} else {
+	   			ll_view.footerTitle = "0 / 0 loaded";
+				Ti.App.fireEvent('app:hide.loader');
+	   		} 
 		});
 				
 		Ti.API.addEventListener("processLikes", function(e) {
 			for ( key in e.data ) {
+				fs.data.numLikesFetched++;
 				ll_view.appendRow(create_row(e.data[key]));
-			}			
+			}
+			
+  			ll_view.footerTitle = fs.data.numLikesFetched + " / " + fs.data.reverseChronoLikedIDs.length + " loaded";
+			/*
+			if (fs.data.numLikesFetched < fs.data.reverseChronoLikedIDs.length) {
+				fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
+			}
+			*/
+			// TODO: when UI scrolls to bottom, can call this (might need mutex)
 			Ti.App.fireEvent('app:hide.loader');
+		});
+		
+		ll_view.addEventListener("scrollEnd", function(e) {
+			Ti.API.info("scroll ended");
+			Ti.API.info(e.contentOffset);
 		});
 				
 		return ll_view;
