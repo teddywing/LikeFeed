@@ -58,7 +58,9 @@
 	function create_row( key )
 	{
 		// Reason for Factory: templating format of the row
-		var row = Ti.UI.createTableViewRow();
+		var row = Ti.UI.createTableViewRow(/*{
+			hasChild: true // messes up the layout currently. Try later.
+		}*/);
 
 		row.addEventListener('click', function(e) {
 			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
