@@ -5,7 +5,7 @@
 		var row = Ti.UI.createTableViewRow();
 		
 		var profile_icon = Ti.UI.createImageView({
-			url:"images/fb_test_profile.jpg",
+			image:"images/fb_test_profile.jpg",
 			width:50,
 			height:50,
 			left:0,
