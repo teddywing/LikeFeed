@@ -30,12 +30,11 @@
 		return row;
 	}
 	
-	fs.ui.addItems = function( items )
+	fs.ui.addItems = function( list )
 	{
-		for( item in items ){
-			Ti.API.info( item );
-		} 
-		
+		for ( key in list.list ) {
+			Ti.API.info( list.list[key] );
+		}
 	}
 	
 	fs.ui.createLikeList = function() {
