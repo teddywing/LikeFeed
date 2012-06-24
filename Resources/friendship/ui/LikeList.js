@@ -187,11 +187,8 @@
 	
 	function friend_name_from_uid(uid) {
 		var result = "???";
-		for (var i = 0; i < fs.data.friends.length; i++) {
-			if (fs.data.friends[i].uid == uid) {
-				result = fs.data.friends[i].name;
-				break;
-			}
+		if (uid.toString() in fs.data.friends) {
+			result = fs.data.friends[uid.toString()].name;
 		}
 		return result;
 	};
@@ -208,7 +205,16 @@
 		//Ti.App.fireEvent('app:show.loader');
 		
 		Ti.API.addEventListener("processFriendIDs", function(e) {
-			fs.data.friends = e.data;
+			Ti.API.info(e.data);
+			fs.data.friends = Array();
+			for (var i = 0; i < e.data.length; i++) {
+				fs.data.friends[e.data[i].uid.toString()] = {uid: e.data[i].uid, pic: e.data[i].pic_square, name: e.data[i].name};
+			}
+			
+			for (key in fs.data.friends) {
+				Ti.API.info(key + ": " + fs.data.friends[key].name);
+			}
+			
 			fs.core.queryAllFriendLikeIDsFQL();
 		});
 				
