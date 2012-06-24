@@ -5,41 +5,27 @@
 		Ti.Facebook.requestWithGraphPath(fqlURL, {}, 'GET', fqlCallback);
 	};
 	
-	fs.core.queryAllFriendPostsFQL = function() {
+	fs.core.handleFQLResponse = function(response, eventName) {
+		if (response.success) {
+			var data = JSON.parse(response.result);
+			Ti.API.fireEvent(eventName, {data: data});
+		} else if (response.error) {
+			Ti.API.fireEvent("processFQLError", {what: response.error}); // TODO: add event listener to processFQLError and print the .what field
+		} else {
+			Ti.API.fireEvent("processFQLError", {what: "unrecognized query response"});
+		}
+	}; // TODO: find some way to handle timeout (via Ti.Facebook....)
+
+	fs.core.handleAllFriendPostsFQLResponse = function (result) { fs.core.handleFQLResponse(result, "processPosts"); };
+	fs.core.queryAllFriendPostsFQL = function() { // TODO: make a variant that takes in user list and other filter info
 		var query = "SELECT page_id, name, description, page_url, pic_square, fan_count, type, website, general_info ";
 		query += "FROM page WHERE page_id ";
 		query += "IN (SELECT page_id FROM page_fan WHERE uid ";
 		//query += "= " + Ti.Facebook.uid + ")";
 		query += "IN (SELECT uid2 FROM friend WHERE uid1 = " + Titanium.Facebook.uid + "))";
-		//query += "order by last_name limit 20";
-		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleAllFriendPostsFQL);
-		// TODO: after calling this fn, display the loading animation
-	};
-	
-	/*
-	fs.core.handleFQLResponse = function(callback) {
-	};
-	*/
-	
-	fs.core.handleAllFriendPostsFQL = function(result) {
-		if (result.success) {
-			var postsList = JSON.parse(result.result);
-
-			/*			
-			Ti.API.info(postsList.length);
-			Ti.API.info(postsList[0].name);
-			Ti.API.info(postsList[0].page_id);
-			Ti.API.info(postsList[0].website);
-			*/
-
-			Ti.API.fireEvent("processPosts", {list:postsList});
-		} else if (result.error) {
-			//Ti.API.info("ERROR: " + result.error); // TODO: remove
-			Ti.API.fireEvent("processFQLError", {what:result.error});
-		} else {
-			//Ti.API.info("ERROR: unknown response from FQL query"); // TODO: remove
-			Ti.API.fireEvent("processFQLError", {what:"unknown FQL response"});
-		}
-	}; // TODO: handle timeouts
-	
+		query += " limit 20"; // TODO: remove the limit
+		Ti.API.info(query); // TODO: remove debug printout
+		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleAllFriendPostsFQLResponse);
+		Ti.API.fireEvent("displayLoadingAnimation");
+	};	
 })();
