@@ -1,4 +1,17 @@
 (function() {
+	function addCommas(nStr)
+	{
+	  nStr += '';
+	  x = nStr.split('.');
+	  x1 = x[0];
+	  x2 = x.length > 1 ? '.' + x[1] : '';
+	  var rgx = /(\d+)(\d{3})/;
+	  while (rgx.test(x1)) {
+	    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	  }
+	  return x1 + x2;
+	}
+
 	function add_test_data(ll_view)
 	{
 		ll_view.appendRow( 
@@ -61,16 +74,19 @@
 		});
 		
 		var fan_c = Ti.UI.createLabel({
-			text: key.fan_count,
+			text: addCommas(key.fan_count),
 			font:{fontSize:10,fontWeight:'bold'},
-			color:'#3b5997',
-			//backgroundColor:'lightblue',
-			width:'auto',
-			textAlign:'center',
-			top:2,
-			left:thumb_icon.left + thumb_icon.width + 2,
+			//color:'#3b5997',
+			color:'white',
+			backgroundColor:'black',
+			width:50,
+			textAlign:'right',
+			top: 0,
+			opacity:0.65,
+			left: 0,
 			height:'auto'
 		});
+		fan_c.top = 50-fan_c.height;
 
 		if( fan_c.width < 10 ) fan_c.width = 10;
 
@@ -80,17 +96,19 @@
 			width:'auto',
 			textAlign:'left',
 			top:2,
-			left:fan_c.left + fan_c.width + 2,
+			left: profile_icon.width + 2,
 			height:'auto',
 			wordWrap:'true'
 		});
+
+		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
 
 		var description = Ti.UI.createLabel({
 			text:key.description,
 			font:{fontSize:12,fontWeight:'single'},
 			width:'auto',
 			textAlign:'left',
-			top: title.height,
+			top: title.height - 1,
 			left:profile_icon.width + 2,
 			height:36,
 			wordWrap:'true',
@@ -102,10 +120,10 @@
 		row.height = 50;
 		
 		row.add( profile_icon );
-		row.add( thumb_icon );
+		// row.add( thumb_icon );
 		row.add(fan_c);
 		row.add( title );
-		row.add( description );
+		// row.add( description );
 		
 		return row;
 	}
