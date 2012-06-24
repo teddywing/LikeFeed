@@ -3,30 +3,22 @@
 		var tab_group = Ti.UI.createTabGroup();
 		Ti.UI.currentTabGroup = tab_group;
 		
-		var login_button = Ti.Facebook.createLoginButton({
-			top: 50,
-			style: 'wide'
-		});
-		
-		var debug_button = Ti.UI.createButton({title: 'Debug'});
-		debug_button.addEventListener('click', function(e) {
-			// Show loading view
-			var loading = fs.ui.createLoadingView();
-			win.add(loading);
-			Ti.App.fireEvent('app:show.loader');
-			
-			Ti.API.info('Logged in: ' + JSON.stringify(Ti.Facebook.loggedIn));
-			if (Ti.Facebook.loggedIn) {
-				fs.core.queryAllFriendPostsFQL();
-			}
-		});
+		var login_button = Ti.Facebook.createLoginButton();
+		var refresh_button = Ti.UI.createButton({
+			image: 'images/refresh.png',
+			width: 10.0,
+			height: 10.0,
+		}); // TODO: figure out how to resize buttons
+		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
 		
 		var win = Ti.UI.createWindow({
-			title: 'FriendShip',
+			//title: 'FriendShip',
     		tabBarHidden: true,
-    		leftNavButton: debug_button,
-    		rightNavButton: login_button,
+    		leftNavButton: refresh_button,
+    		rightNavButton: login_button, // TODO: remove before deployment
 		});
+		var loading = fs.ui.createLoadingView();
+		win.add(loading);
 		
 		var tab = Titanium.UI.createTab({  
     		icon:'KS_nav_views.png',
@@ -35,6 +27,7 @@
 		});
 		
 		win.add(fs.ui.createLikeList());
+		fs.ui.refreshLikeList();
 		tab_group.addTab(tab);
 		
 		return tab_group;

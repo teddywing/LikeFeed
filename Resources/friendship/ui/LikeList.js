@@ -61,7 +61,16 @@
 			
 			Ti.App.fireEvent('app:hide.loader');
 		});
-		
+				
 		return ll_view;
 	};
- })();
+	
+	fs.ui.refreshLikeList = function(e) {
+		if (Ti.Facebook.loggedIn) {
+			Ti.App.fireEvent('app:show.loader');
+			fs.core.queryAllFriendPostsFQL();
+		} else {
+			Ti.Facebook.fireEvent('login');
+		}
+	};
+})();

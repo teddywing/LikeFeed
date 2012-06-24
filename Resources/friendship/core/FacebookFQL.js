@@ -26,6 +26,5 @@
 		query += " limit 20"; // TODO: remove the limit
 		Ti.API.info(query); // TODO: remove debug printout
 		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleAllFriendPostsFQLResponse);
-		Ti.API.fireEvent("displayLoadingAnimation");
 	};	
 })();
