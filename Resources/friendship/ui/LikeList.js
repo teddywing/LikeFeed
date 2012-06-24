@@ -6,6 +6,13 @@
 		// Reason for Factory: templating format of the row
 		var row = Ti.UI.createTableViewRow();
 
+		row.addEventListener('click', function(e) {
+			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
+				title: key.name,
+				url: key.page_url
+			}));
+		});
+		
 			/*		
 			description
 			fan_count
@@ -39,27 +46,23 @@
 		return row;
 	}
 	
-	fs.ui.addItems = function( list )
-	{
-		Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
-		
-		for ( key in list.list ) {
-			ll_view.appendRow( create_row( key ) );
-		}
-	}
-	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
-		
+		/*
 		ll_view.addEventListener('click', function(e) {
 			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
 				title: e.title,
 				url: e.url
 			}));
 		});
+		*/
 		
-		
-		Ti.API.addEventListener( "processPosts", fs.ui.addItems );
+		Ti.API.addEventListener( "processPosts", function( list ) {
+			//Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
+			for ( key in list.list ) {
+				ll_view.appendRow( create_row( list.list[key] ) );
+			}
+		});
 		
 		return ll_view;
 	};
