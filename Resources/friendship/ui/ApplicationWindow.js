@@ -1,6 +1,7 @@
 (function() {
 	fs.ui.createApplicationTabGroup = function() {
 		var tab_group = Ti.UI.createTabGroup();
+		Ti.UI.currentTabGroup = tab_group;
 		
 		var login_button = Ti.Facebook.createLoginButton({
 			top: 50,
