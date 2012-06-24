@@ -11,6 +11,7 @@
 		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
 		
 		var win = Ti.UI.createWindow({
+			barColor: fs.ui.styles.navBarColour,
 			title: 'Sphnx',
     		tabBarHidden: true,
     		leftNavButton: refresh_button
