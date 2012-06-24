@@ -3,5 +3,6 @@
 })();
 
 Ti.include(
-	'/friendship/core/FacebookFQL.js'
+	'/friendship/core/FacebookFQL.js',
+	'/friendship/core/DataManipulation.js'
 )

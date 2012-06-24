@@ -1,4 +1,20 @@
 (function() {
+	var MAX_ROW_HEIGHT = 150;
+	var lookup = {
+		'BOOK':'#b0d3a4', 
+		'SHOW':'#c7b0b5',
+		'MUSICIAN/BAND':'#c7bbb0',
+		'MOVIE':'#ccc399',
+		'TV SHOW':'#5c9aa7'
+	};
+	
+	function getTypeColor(type_str)
+	{
+		var r = lookup[type_str];
+		if( r ) return r;
+		return '#bbbbbb';
+	}
+	
 	function addCommas(nStr)
 	{
 	  nStr += '';
@@ -18,7 +34,7 @@
 			create_row( {
 				pic_square: "images/fb_test_profile.jpg",
 				name: "Test Name",
-				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
+				description: "Description Description Description. Description Description Description Description Description Description Description Description Description ",
 				fan_count: "1000000000000000", 
 				page_url: "http://www.google.com",
 				website: "http://www.google.com",
@@ -97,26 +113,14 @@
 			text: " " + key.type + " ",
 			font:{fontSize:11,fontWeight:'single'},
 			color:'white',
-			backgroundColor: '#b0d3a4',
+			backgroundColor: getTypeColor( key.type ),
 			width:'auto',
 			textAlign:'left',
 			top:2,
 			left: profile_icon.width + 12,
 			height:'auto'
 		});
-
-		var liked_by = Ti.UI.createLabel({
-			text: " Friend Bob ",
-			font:{fontSize:11,fontWeight:'bold'},
-			color: 'white',
-			backgroundColor:"#d1d5e0",
-			width:'auto',
-			textAlign:'left',
-			top:2,
-			left: item_type.left + item_type.width + 2,
-			height:'auto'
-		});
-		
+		 
 		var title = Ti.UI.createLabel({
 			text:key.name,
 			font:{fontSize:16,fontWeight:'bold'},
@@ -128,8 +132,27 @@
 			wordWrap:'true'
 		});
 
+		var liked_by = Ti.UI.createLabel({
+			text: " Friend Bob ",
+			font:{fontSize:11,fontWeight:'single'},
+			
+			//color: 'white',
+			//backgroundColor:"#d1d5e0",
+			
+			color: '#aaaaaa',
+			
+			width:'auto',
+			textAlign:'left',
+			top:2,
+			height:'auto'
+		});
+
+		liked_by.left = 320 - liked_by.width;
 
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
+		if( key.description.indexOf('.') > 0 ){
+			key.description = key.description.substr( 0, key.description.indexOf('.') + 1 ) ;
+		} 
 
 		var description = Ti.UI.createLabel({
 			text:key.description,
@@ -138,8 +161,14 @@
 			width:'auto',
 			textAlign:'left',
 			top: title.top + title.height,
-			left:profile_icon.width + 14
+			left:profile_icon.width + 14,
+			height:'auto',
+			wordWrap:true
 		});
+		
+		var max_height = MAX_ROW_HEIGHT - description.top;
+		
+		if( description.height > max_height ) description.height = max_height; 
 		
 		
 		var item_view = Ti.UI.createView({
@@ -147,8 +176,8 @@
 			top: 5,
 			bottom: 5
 		});
-		
-		row.height = 'auto'; //50;
+
+		row.height = 'auto';
 		
 		item_view.add( profile_icon );
 		// row.add( thumb_icon );
@@ -161,10 +190,15 @@
 		row.add(item_view);
 		
 		return row;
-	}
+	};
+	
+	function sortLikeIDsByTime(a, b) { // TODO: deprecated
+  		return ((a.time > b.time) ? -1 : ((a.time < b.time) ? 1 : 0));
+	};
 	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
+		ll_view.maxRowHeight = MAX_ROW_HEIGHT;
 		
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
@@ -173,12 +207,78 @@
 		
 		//Ti.App.fireEvent('app:show.loader');
 		
-		Ti.API.addEventListener("processPosts", function(d) {
-			for ( key in d.data ) {
-				ll_view.appendRow( create_row( d.data[key] ) );
+		Ti.API.addEventListener("processFriendIDs", function(e) {
+			fs.data.friends = e.data;
+			fs.core.queryAllFriendLikeIDsFQL();
+		});
+				
+		Ti.API.addEventListener("processLikeIDs", function(e) {
+			fs.data.likeIDs = Array();
+            fs.data.reverseChronoLikedIDs = Array();
+
+			for ( key in e.data ) {
+				pid = e.data[key].page_id + '';
+				tm = e.data[key].created_time;
+				uid = e.data[key].uid;
+				
+				if (pid in fs.data.likeIDs) {
+					fs.data.likeIDs[pid].count += 1;
+					
+					if (tm >= fs.data.likeIDs[pid].time) {
+						fs.data.likeIDs[pid].time = tm;
+						fs.data.likeIDs[pid].uid = uid;
+					}
+				} else {
+					fs.data.likeIDs[pid] = {count: 1, time: tm, uid: uid};
+				}
+			}
+
+			if (e.data.length > 0) {			
+				var tuples = [];
+	
+				for (var key in fs.data.likeIDs) {
+					tuples.push([key, fs.data.likeIDs[key]]);
+				}
+				tuples.sort(function(a, b) {
+	    			a = a[1].time;
+	    			b = b[1].time;
+	    			return a < b ? 1 : (a > b ? -1 : 0);
+				});
+	
+				for (var i = 0; i < tuples.length; i++) {
+					fs.data.reverseChronoLikedIDs.push(tuples[i][0]);
+					//Ti.API.info(tuples[i][0] + ' ' + tuples[i][1].time);
+	   			}
+	   			fs.data.numLikesFetched = 0;
+	   			
+	   			ll_view.footerTitle = "0 / " + fs.data.reverseChronoLikedIDs.length + " loaded";
+	   			
+	   			fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
+	   		} else {
+	   			ll_view.footerTitle = "0 / 0 loaded";
+				Ti.App.fireEvent('app:hide.loader');
+	   		} 
+		});
+				
+		Ti.API.addEventListener("processLikes", function(e) {
+			for ( key in e.data ) {
+				fs.data.numLikesFetched++;
+				ll_view.appendRow(create_row(e.data[key]));
 			}
 			
+  			ll_view.footerTitle = fs.data.numLikesFetched + " / " + fs.data.reverseChronoLikedIDs.length + " loaded";
+			/*
+			if (fs.data.numLikesFetched < fs.data.reverseChronoLikedIDs.length) {
+				fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
+			}
+			*/
+			// TODO: when UI scrolls to bottom, can call this (might need mutex)
 			Ti.App.fireEvent('app:hide.loader');
+		});
+		
+		ll_view.addEventListener("scrollEnd", function(e) {
+			Ti.API.info("scroll ended");
+			Ti.API.info(e.contentOffset);
 		});
 				
 		return ll_view;
@@ -187,9 +287,7 @@
 	fs.ui.refreshLikeList = function(e) {
 		if (Ti.Facebook.loggedIn) {
 			Ti.App.fireEvent('app:show.loader');
-			fs.core.queryAllFriendPostsFQL();
-		} else {
-			Ti.Facebook.fireEvent('login');
+			fs.core.queryAllFriendLikeIDsFQL(); // TODO: switch to friend_ids version of query
 		}
 	};
 })();
