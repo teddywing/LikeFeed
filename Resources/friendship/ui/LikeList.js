@@ -1,11 +1,20 @@
 (function() {
-	function create_row( title )
+	function create_row( key )
 	{
+		// Ti.UI.createAlertDialog( {title:"key " + key.name} ).show();
+
 		// Reason for Factory: templating format of the row
 		var row = Ti.UI.createTableViewRow();
-		
+
+			/*		
+			description
+			fan_count
+			page_url
+			website
+			*/
+
 		var profile_icon = Ti.UI.createImageView({
-			url:"images/fb_test_profile.jpg",
+			url:key.pic_square,
 			width:50,
 			height:50,
 			left:0,
@@ -13,7 +22,7 @@
 		});
 
 		var content = Ti.UI.createLabel({
-			text:title,
+			text:key.name,
 			font:{fontSize:12,fontWeight:'bold'},
 			width:'auto',
 			textAlign:'left',
@@ -32,8 +41,10 @@
 	
 	fs.ui.addItems = function( list )
 	{
+		Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
+		
 		for ( key in list.list ) {
-			Ti.API.info( list.list[key] );
+			ll_view.appendRow( create_row( key ) );
 		}
 	}
 	
@@ -47,8 +58,6 @@
 			}));
 		});
 		
-		ll_view.appendRow( create_row( 'OMG, I like totally like Skrillex.') );
-		ll_view.appendRow( create_row( 'Seriously, this is amazing.  You totally need to party.') );
 		
 		Ti.API.addEventListener( "processPosts", fs.ui.addItems );
 		
