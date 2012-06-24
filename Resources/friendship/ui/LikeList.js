@@ -57,11 +57,18 @@
 		});
 		*/
 		
+		var loading = fs.ui.createLoadingView();
+		ll_view.add(loading);
+		
+		// Ti.App.fireEvent('app:show.loader');
+		
 		Ti.API.addEventListener( "processPosts", function( list ) {
 			//Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
 			for ( key in list.list ) {
 				ll_view.appendRow( create_row( list.list[key] ) );
 			}
+			
+			Ti.App.fireEvent('app:hide.loader');
 		});
 		
 		return ll_view;

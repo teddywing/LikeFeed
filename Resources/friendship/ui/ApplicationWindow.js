@@ -10,6 +10,10 @@
 		
 		var debug_button = Ti.UI.createButton({title: 'Debug'});
 		debug_button.addEventListener('click', function(e) {
+			// Show loading view
+			var loading = fs.ui.createLoadingView();
+			win.add(loading);
+			Ti.App.fireEvent('app:show.loader');
 			
 			Ti.API.info('Logged in: ' + JSON.stringify(Ti.Facebook.loggedIn));
 			if (Ti.Facebook.loggedIn) {
