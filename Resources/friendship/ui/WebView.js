@@ -9,7 +9,8 @@
 		});
 		
 		var webview = Ti.UI.createWebView({
-			url: options['url']
+			url: options['url'],
+			top: -44 // Removes the Facebook navbar. Eventually, we should only do this on facebook webviews, but as long as we only have facebook webviews, we can just hard-code it in there.
 		});
 		
 		win.add(webview);
