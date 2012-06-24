@@ -2,7 +2,7 @@
 	fs.ui = {};
 	
 	fs.ui.styles = {
-		navBarColour: '#ac0b24'
+		navBarColour: '#8c2a2a'
 	};
 })();
 
