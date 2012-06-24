@@ -3,7 +3,6 @@
 		var tab_group = Ti.UI.createTabGroup();
 		Ti.UI.currentTabGroup = tab_group;
 		
-		var login_button = Ti.Facebook.createLoginButton();
 		var refresh_button = Ti.UI.createButton({
 			image: 'images/refresh.png',
 			width: 10.0,
@@ -14,8 +13,7 @@
 		var win = Ti.UI.createWindow({
 			//title: 'FriendShip',
     		tabBarHidden: true,
-    		leftNavButton: refresh_button,
-    		rightNavButton: login_button, // TODO: remove before deployment
+    		leftNavButton: refresh_button
 		});
 		var loading = fs.ui.createLoadingView();
 		win.add(loading);
