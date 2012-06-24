@@ -4,7 +4,7 @@
 		
 		var win = Ti.UI.createWindow({
 			barColor: fs.ui.styles.navBarColour,
-			title: (options['title']) ? options['title'] : '',
+			title: 'Sphnx', //(options['title']) ? options['title'] : '',
 			backButtonTitle: 'Back'
 		});
 		
