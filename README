@@ -1,18 +1,7 @@
-Welcome to your Appcelerator Titanium Mobile Project
+FriendShip
+==========
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+# Development Setup
 
-
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+Titanium 1.6.2 SDK download link: http://builds.appcelerator.com.s3.amazonaws.com/mobile/1_6_X/mobilesdk-1.6.2-20110418144400-osx.zip
+	(from http://builds.appcelerator.com.s3.amazonaws.com/index.html)
