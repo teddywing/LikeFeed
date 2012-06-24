@@ -108,10 +108,17 @@
 				for (var i = 0; i < switch_buttons.length; i++) {
 					switch_buttons[i].value = true
 				}
+				for (key in fs.data.friends) {
+					fs.data.friends[key].selected = true
+				}
 			}
 			else if (e.index == 1) {
 				for (var i = 0; i < switch_buttons.length; i++) {
 					switch_buttons[i].value = false
+				}
+				
+				for (key in fs.data.friends) {
+					fs.data.friends[key].selected = false
 				}
 			}
 		});
