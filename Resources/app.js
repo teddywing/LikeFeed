@@ -44,7 +44,7 @@ var fb_button = Titanium.Facebook.createLoginButton({ top: 50, style: 'wide' });
 //Titanium.UI.currentWindow.add();
 
 win1.add(label1);
-win1.add(fb_button);
+win1.add(fb_button); 
 
 //
 // create controls tab and root window
