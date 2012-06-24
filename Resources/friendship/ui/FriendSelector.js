@@ -38,7 +38,10 @@
 			win.close();
 		});
 		
-		friend_table = Ti.UI.createTableView();
+		var friend_table = Ti.UI.createTableView({
+			bottom: 44
+		});
+		var switch_buttons = [];
 		
 		var friends = [];
 	
@@ -74,6 +77,7 @@
 			switch_button.addEventListener("change", function(e) {
 				fs.data.friends[this.SP_uidString].selected = e.value;
 			});
+			switch_buttons.push(switch_button);
 			
 			row.add(avatar);
 			row.add(name);
@@ -83,6 +87,36 @@
 		}
 		
 		win.add(friend_table);
+		
+		
+		var buttonbar = Ti.UI.createButtonBar({
+			labels: [{title: 'Enable All'}, {title: 'Disable All'}],
+			backgroundColor: fs.ui.styles.navBarColour,
+			width: 240
+		});
+		var flexSpace = Titanium.UI.createButton({
+			systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
+		});
+		var toolbar = Ti.UI.createToolbar({
+			barColor: fs.ui.styles.navBarColour,
+			bottom: 0,
+			items: [flexSpace, buttonbar, flexSpace]
+		});
+		
+		buttonbar.addEventListener('click', function(e) {
+			if (e.index == 0) {
+				for (var i = 0; i < switch_buttons.length; i++) {
+					switch_buttons[i].value = true
+				}
+			}
+			else if (e.index == 1) {
+				for (var i = 0; i < switch_buttons.length; i++) {
+					switch_buttons[i].value = false
+				}
+			}
+		});
+		
+		win.add(toolbar);
 		
 		return win;
 	};
