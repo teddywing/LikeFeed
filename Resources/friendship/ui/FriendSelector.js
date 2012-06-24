@@ -1,7 +1,7 @@
 (function() {
 	fs.ui.friendSelectorButton = function() {
 		var button = Ti.UI.createButton({
-			title: 'fff'
+			image: 'images/friends.png'
 		});
 		
 		button.addEventListener('click', function() {
