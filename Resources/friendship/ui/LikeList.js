@@ -125,7 +125,7 @@
 		});
 
 		var liked_by = Ti.UI.createLabel({
-			text: " Friend Bob ",
+			text: key.friend_name,
 			font:{fontSize:11,fontWeight:'single'},
 			
 			//color: 'white',
@@ -183,9 +183,17 @@
 		
 		return row;
 	};
+
 	
-	function sortLikeIDsByTime(a, b) { // TODO: deprecated
-  		return ((a.time > b.time) ? -1 : ((a.time < b.time) ? 1 : 0));
+	function friend_name_from_uid(uid) {
+		var result = "???";
+		for (var i = 0; i < fs.data.friends.length; i++) {
+			if (fs.data.friends[i].uid == uid) {
+				result = fs.data.friends[i].name;
+				break;
+			}
+		}
+		return result;
 	};
 	
 	fs.ui.createLikeList = function() {
@@ -239,8 +247,7 @@
 				});
 	
 				for (var i = 0; i < tuples.length; i++) {
-					fs.data.reverseChronoLikedIDs.push(tuples[i][0]);
-					//Ti.API.info(tuples[i][0] + ' ' + tuples[i][1].time);
+					fs.data.reverseChronoLikedIDs.push({pid: tuples[i][0], count: tuples[i][1].count, time: tuples[i][1].time, uid: tuples[i][1].uid});
 	   			}
 	   			fs.data.numLikesFetched = 0;
 	   			
@@ -257,6 +264,9 @@
 				
 		Ti.API.addEventListener("processLikes", function(e) {
 			for ( key in e.data ) {
+				
+				e.data[key].more = fs.data.reverseChronoLikedIDs[fs.data.numLikesFetched];
+				e.data[key].friend_name = friend_name_from_uid(e.data[key].more.uid);		
 				fs.data.numLikesFetched++;
 				ll_view.appendRow(create_row(e.data[key]));
 			}

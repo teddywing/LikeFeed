@@ -10,11 +10,11 @@
 			var data = JSON.parse(response.result);
 			Ti.API.fireEvent(eventName, {data: data});
 		} else if (response.error) {
-			Ti.API.fireEvent("processFQLError", {what: response.error}); // TODO: add event listener to processFQLError and print the .what field
+			Ti.API.fireEvent("processFQLError", {what: response.error});
 		} else {
 			Ti.API.fireEvent("processFQLError", {what: "unrecognized query response"});
 		}
-	}; // TODO: find some way to handle timeout (via Ti.Facebook....)
+	}; // LATER: find some way to handle timeout (via Ti.Facebook....)
 
 	fs.core.handleFriendIDsFQLResponse = function (result) { fs.core.handleFQLResponse(result, "processFriendIDs"); };
 	fs.core.queryFriendIDsFQL = function() {
@@ -50,7 +50,7 @@
 		numLikesMore = Math.min((fs.data.reverseChronoLikedIDs.length - fs.data.numLikesFetched), numLikesMore);
 		page_ids = Array();
 		for (var i = fs.data.numLikesFetched; i < fs.data.numLikesFetched + numLikesMore; i++) {
-			page_ids.push(fs.data.reverseChronoLikedIDs[i]);
+			page_ids.push(fs.data.reverseChronoLikedIDs[i].pid);
 		}
 		fs.core.queryLikesFQL(page_ids);
 	};
