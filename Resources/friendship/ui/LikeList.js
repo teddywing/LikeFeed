@@ -116,7 +116,7 @@
 			left: item_type.left + item_type.width + 2,
 			height:'auto'
 		});
-		
+		 
 		var title = Ti.UI.createLabel({
 			text:key.name,
 			font:{fontSize:12,fontWeight:'bold'},
