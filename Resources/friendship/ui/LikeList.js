@@ -76,7 +76,7 @@
 		});
 		
 		var fan_c = Ti.UI.createLabel({
-			text: addCommas(key.fan_count),
+			text: addCommas( (key.fan_count >= 10000000) ? Math.round((key.fan_count / 1000000)) + 'M' : key.fan_count ),
 			font:{fontSize:10,fontWeight:'bold'},
 			//color:'#3b5997',
 			color:'white',
