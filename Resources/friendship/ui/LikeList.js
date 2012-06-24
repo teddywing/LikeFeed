@@ -28,8 +28,7 @@
 			textAlign:'left',
 			top:2,
 			left:52,
-			wordWrap:true
-			//height:26
+			height:26
 		});
 
 		row.height = 50;
