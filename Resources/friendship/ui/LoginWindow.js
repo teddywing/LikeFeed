@@ -17,7 +17,7 @@
 		
 		// add the button.  Note that it doesn't need a click event or anything.
 		return Ti.Facebook.createLoginButton({
-			top: 50,
+			top: 300,
 			style: 'wide'
 		});
 	};
@@ -29,8 +29,17 @@
 			tabBarHidden: true,
 			backgroundColor: fs.ui.styles.navBarColour
 		});
+		
+		var icon = Ti.UI.createImageView({
+			image:"images/SphnxLogo300.png",
+			width:225,
+			height:225,
+			left: 'auto',
+			top: 38
+		});
+		
 		var view = Ti.UI.createView({
-			backgroundColor: '#fff'
+			backgroundColor: fs.ui.styles.navBarColour
 		});
 		
 		var tab = Ti.UI.createTab({
@@ -39,6 +48,7 @@
 		tab_group.addTab(tab);
 		
 		view.add(createFBLoginButton());
+		view.add(icon);
 		win.add(view);
 		
 		return tab_group;

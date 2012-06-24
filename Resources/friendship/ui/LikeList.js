@@ -121,7 +121,7 @@
 			top:item_type.height + 2,
 			left: profile_icon.width + 14,
 			height:'auto',
-			wordWrap:'true'
+			wordWrap:false
 		});
 
 		var liked_by = Ti.UI.createLabel({
