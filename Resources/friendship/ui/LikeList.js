@@ -122,7 +122,7 @@
 			textAlign:'left',
 			top:item_type.height + 2,
 			left: profile_icon.width + 14,
-			height:'auto',
+			height:18,
 			wordWrap:false
 		});
 
