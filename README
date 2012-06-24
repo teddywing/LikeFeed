@@ -1,7 +1,14 @@
-FriendShip
+FriendShip --> Renamed to Sphnx
 ==========
 
 # Development Setup
 
 Titanium 1.6.2 SDK download link: http://builds.appcelerator.com.s3.amazonaws.com/mobile/1_6_X/mobilesdk-1.6.2-20110418144400-osx.zip
 	(from http://builds.appcelerator.com.s3.amazonaws.com/index.html)
+
+
+# Research
+
+- Infinite scrolling in Titanium: https://gist.github.com/810391
+- Infinite scrolling (only Android): https://gist.github.com/810171
+
