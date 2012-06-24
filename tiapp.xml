@@ -23,6 +23,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
+    <property name="ti.facebook.appid">258369447595838</property>
     <guid>ccd110bb-8710-4380-ad4a-94d93e18d62a</guid>
     <iphone>
         <orientations device="iphone">
