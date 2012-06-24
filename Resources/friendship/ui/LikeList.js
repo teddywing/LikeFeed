@@ -19,9 +19,10 @@
 				pic_square: "images/fb_test_profile.jpg",
 				name: "Test Name",
 				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
-				fan_count: "15", 
+				fan_count: "1000000000000000", 
 				page_url: "http://www.google.com",
-				website: "http://www.google.com"
+				website: "http://www.google.com",
+				type: "SHOW"
 			} ) 
 		);
 		
@@ -32,7 +33,8 @@
 				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
 				fan_count: "2", 
 				page_url: "http://www.google.com",
-				website: "http://www.google.com"
+				website: "http://www.google.com",
+				type: "BOOK"
 			} ) 
 		);		
 	}
@@ -84,22 +86,48 @@
 			top: 0,
 			opacity:0.65,
 			left: 0,
-			height:'auto'
+			height:'12'
 		});
 		fan_c.top = 50-fan_c.height;
 
 		if( fan_c.width < 10 ) fan_c.width = 10;
 
+
+		var item_type = Ti.UI.createLabel({
+			text: " " + key.type + " ",
+			font:{fontSize:11,fontWeight:'single'},
+			color:'white',
+			backgroundColor: '#b0d3a4',
+			width:'auto',
+			textAlign:'left',
+			top:2,
+			left: profile_icon.width + 2,
+			height:'auto'
+		});
+
+		var liked_by = Ti.UI.createLabel({
+			text: " Friend Bob ",
+			font:{fontSize:11,fontWeight:'bold'},
+			color: 'white',
+			backgroundColor:"#d1d5e0",
+			width:'auto',
+			textAlign:'left',
+			top:2,
+			left: item_type.left + item_type.width + 2,
+			height:'auto'
+		});
+		
 		var title = Ti.UI.createLabel({
 			text:key.name,
 			font:{fontSize:12,fontWeight:'bold'},
 			width:'auto',
 			textAlign:'left',
-			top:2,
-			left: profile_icon.width + 2,
+			top:item_type.height + 2,
+			left: profile_icon.width + 4,
 			height:'auto',
 			wordWrap:'true'
 		});
+
 
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
 
@@ -108,11 +136,8 @@
 			font:{fontSize:12,fontWeight:'single'},
 			width:'auto',
 			textAlign:'left',
-			top: title.height - 1,
-			left:profile_icon.width + 2,
-			height:36,
-			wordWrap:'true',
-			html:true
+			top: title.top + title.height-5,
+			left:profile_icon.width + 4
 		});
 		
 		
@@ -123,7 +148,9 @@
 		// row.add( thumb_icon );
 		row.add(fan_c);
 		row.add( title );
-		// row.add( description );
+		row.add(liked_by);
+		row.add( item_type );
+		row.add( description );
 		
 		return row;
 	}
@@ -134,7 +161,9 @@
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
 		
-		// Ti.App.fireEvent('app:show.loader');
+		add_test_data( ll_view );
+		
+		//Ti.App.fireEvent('app:show.loader');
 		
 		Ti.API.addEventListener("processPosts", function(d) {
 			for ( key in d.data ) {
