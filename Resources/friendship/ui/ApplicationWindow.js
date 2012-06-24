@@ -10,7 +10,7 @@
 		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
 		
 		var win = Ti.UI.createWindow({
-			//title: 'FriendShip',
+			title: 'Sphnx',
     		tabBarHidden: true,
     		leftNavButton: refresh_button
 		});
