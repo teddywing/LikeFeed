@@ -19,8 +19,8 @@
 				pic_square: "images/fb_test_profile.jpg",
 				name: "Test Name",
 				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
+				fan_count: "15", 
 				page_url: "http://www.google.com",
-				website: "http://www.google.com",
 				website: "http://www.google.com"
 			} ) 
 		);
@@ -32,6 +32,7 @@
 				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
 				fan_count: "2", 
 				page_url: "http://www.google.com",
+				website: "http://www.google.com"
 			} ) 
 		);		
 	}
@@ -83,6 +84,7 @@
 			top: 0,
 			opacity:0.65,
 			left: 0,
+			height:'auto'
 		});
 		fan_c.top = 50-fan_c.height;
 
@@ -93,10 +95,11 @@
 			font:{fontSize:12,fontWeight:'bold'},
 			width:'auto',
 			textAlign:'left',
+			top:2,
+			left: profile_icon.width + 2,
 			height:'auto',
 			wordWrap:'true'
 		});
-
 
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
 
@@ -105,12 +108,15 @@
 			font:{fontSize:12,fontWeight:'single'},
 			width:'auto',
 			textAlign:'left',
+			top: title.height - 1,
+			left:profile_icon.width + 2,
+			height:36,
 			wordWrap:'true',
+			html:true
 		});
 		
 		
 
-		row.height = 50;
 		row.height = 'auto';
 		
 		row.add( profile_icon );
@@ -129,8 +135,7 @@
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
 		
-		
-		//Ti.App.fireEvent('app:show.loader');
+		// Ti.App.fireEvent('app:show.loader');
 		
 		Ti.API.addEventListener("processPosts", function(d) {
 			for ( key in d.data ) {
