@@ -1,4 +1,20 @@
 (function() {
+	var MAX_ROW_HEIGHT = 150;
+	var lookup = {
+		'BOOK':'#b0d3a4', 
+		'SHOW':'#c7b0b5',
+		'MUSICIAN/BAND':'#c7bbb0',
+		'MOVIE':'#ccc399',
+		'TV SHOW':'#5c9aa7'
+	};
+	
+	function getTypeColor(type_str)
+	{
+		var r = lookup[type_str];
+		if( r ) return r;
+		return '#bbbbbb';
+	}
+	
 	function addCommas(nStr)
 	{
 	  nStr += '';
@@ -18,7 +34,7 @@
 			create_row( {
 				pic_square: "images/fb_test_profile.jpg",
 				name: "Test Name",
-				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
+				description: "Description Description Description. Description Description Description Description Description Description Description Description Description ",
 				fan_count: "1000000000000000", 
 				page_url: "http://www.google.com",
 				website: "http://www.google.com",
@@ -97,23 +113,11 @@
 			text: " " + key.type + " ",
 			font:{fontSize:11,fontWeight:'single'},
 			color:'white',
-			backgroundColor: '#b0d3a4',
+			backgroundColor: getTypeColor( key.type ),
 			width:'auto',
 			textAlign:'left',
 			top:2,
 			left: profile_icon.width + 2,
-			height:'auto'
-		});
-
-		var liked_by = Ti.UI.createLabel({
-			text: " Friend Bob ",
-			font:{fontSize:11,fontWeight:'bold'},
-			color: 'white',
-			backgroundColor:"#d1d5e0",
-			width:'auto',
-			textAlign:'left',
-			top:2,
-			left: item_type.left + item_type.width + 2,
 			height:'auto'
 		});
 		 
@@ -128,21 +132,46 @@
 			wordWrap:'true'
 		});
 
+		var liked_by = Ti.UI.createLabel({
+			text: " Friend Bob ",
+			font:{fontSize:11,fontWeight:'single'},
+			
+			//color: 'white',
+			//backgroundColor:"#d1d5e0",
+			
+			color: '#aaaaaa',
+			
+			width:'auto',
+			textAlign:'left',
+			top:2,
+			height:'auto'
+		});
+
+		liked_by.left = 320 - liked_by.width;
 
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
+		if( key.description.indexOf('.') > 0 ){
+			key.description = key.description.substr( 0, key.description.indexOf('.') + 1 ) ;
+		} 
 
 		var description = Ti.UI.createLabel({
 			text:key.description,
 			font:{fontSize:12,fontWeight:'single'},
 			width:'auto',
 			textAlign:'left',
-			top: title.top + title.height-5,
-			left:profile_icon.width + 4
+			top: title.top + title.height,
+			left:profile_icon.width + 4,
+			height:'auto',
+			wordWrap:true
 		});
+		
+		var max_height = MAX_ROW_HEIGHT - description.top;
+		
+		if( description.height > max_height ) description.height = max_height; 
 		
 		
 
-		row.height = 50;
+		row.height = 'auto';
 		
 		row.add( profile_icon );
 		// row.add( thumb_icon );
@@ -151,12 +180,14 @@
 		row.add(liked_by);
 		row.add( item_type );
 		row.add( description );
+
 		
 		return row;
 	}
 	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
+		ll_view.maxRowHeight = MAX_ROW_HEIGHT;
 		
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
