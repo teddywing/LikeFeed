@@ -21,7 +21,7 @@
 			*/
 
 		var profile_icon = Ti.UI.createImageView({
-			url:key.pic_square,
+			image:key.pic_square,
 			width:50,
 			height:50,
 			left:0,
