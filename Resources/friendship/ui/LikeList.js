@@ -112,24 +112,18 @@
 	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
-		/*
-		ll_view.addEventListener('click', function(e) {
-			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
-				title: e.title,
-				url: e.url
-			}));
-		});
-		*/
-
-		// add_test_data( ll_view );
 		
+		var loading = fs.ui.createLoadingView();
+		ll_view.add(loading);
 		
-		Ti.API.addEventListener( "processPosts", function( list ) {
-			if( list.list.length == 0 )
-				Ti.UI.createAlertDialog( {title:"Sorry, but the request returned 0 items."} ).show();
-			for ( key in list.list ) {
-				ll_view.appendRow( create_row( list.list[key] ) );
+		// Ti.App.fireEvent('app:show.loader');
+		
+		Ti.API.addEventListener("processPosts", function(d) {
+			for ( key in d.data ) {
+				ll_view.appendRow( create_row( d.data[key] ) );
 			}
+			
+			Ti.App.fireEvent('app:hide.loader');
 		});
 		
 		return ll_view;
