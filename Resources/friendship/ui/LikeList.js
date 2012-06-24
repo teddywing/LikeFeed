@@ -271,7 +271,8 @@
 		
 		ll_view.addEventListener("scrollEnd", function(e) {
 			Ti.API.info("scroll ended");
-			Ti.API.info(e.contentOffset);
+			Ti.API.info(e.contentOffset.y);
+			Ti.API.info(ll_view.height);
 		});
 				
 		return ll_view;
