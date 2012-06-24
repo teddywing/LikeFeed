@@ -48,24 +48,15 @@
 	
 	fs.ui.createLikeList = function() {
 		var ll_view = Ti.UI.createTableView();
-		/*
-		ll_view.addEventListener('click', function(e) {
-			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
-				title: e.title,
-				url: e.url
-			}));
-		});
-		*/
 		
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
 		
 		// Ti.App.fireEvent('app:show.loader');
 		
-		Ti.API.addEventListener( "processPosts", function( list ) {
-			//Ti.UI.createAlertDialog( {title:"Items: " + list.list.length} ).show();
-			for ( key in list.list ) {
-				ll_view.appendRow( create_row( list.list[key] ) );
+		Ti.API.addEventListener("processPosts", function(d) {
+			for ( key in d.data ) {
+				ll_view.appendRow( create_row( d.data[key] ) );
 			}
 			
 			Ti.App.fireEvent('app:hide.loader');
