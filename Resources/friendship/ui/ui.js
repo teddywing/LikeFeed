@@ -11,5 +11,6 @@ Ti.include(
 	'/friendship/ui/LikeList.js',
 	'/friendship/ui/LoginWindow.js',
 	'/friendship/ui/WebView.js',
-	'/friendship/ui/ActivityIndicator.js'
+	'/friendship/ui/ActivityIndicator.js',
+	'/friendship/ui/FriendSelector.js'
 )
