@@ -27,7 +27,7 @@
 		var win = Ti.UI.createWindow({
 			navBarHidden: true,
 			tabBarHidden: true,
-			backgroundColor: fs.ui.style.navBarColour
+			backgroundColor: fs.ui.styles.navBarColour
 		});
 		var view = Ti.UI.createView({
 			backgroundColor: '#fff'
