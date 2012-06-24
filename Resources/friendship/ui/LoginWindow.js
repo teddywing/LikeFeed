@@ -5,7 +5,7 @@
 		
 		Titanium.Facebook.addEventListener('login', function(e) {
 			if (e.success) {
-				alert('Logged in');
+				fs.app.mainTabGroup.open();
 			}
 		});
 		Titanium.Facebook.addEventListener('logout', function(e) {
@@ -18,4 +18,26 @@
 			style: 'wide'
 		});
 	};
+	
+	fs.ui.createLoginWindow = function() {
+		var tab_group = Ti.UI.createTabGroup();
+		var win = Ti.UI.createWindow({
+			title: 'FriendShip',
+			tabBarHidden: true
+		});
+		var view = Ti.UI.createView({
+			backgroundColor: '#fff'
+		});
+		
+		var tab = Ti.UI.createTab({
+			window: win
+		});
+		tab_group.addTab(tab);
+		
+		view.add(createFBLoginButton());
+		win.add(view);
+		
+		return tab_group;
+	}
+	
 })();
