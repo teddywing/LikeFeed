@@ -8,14 +8,16 @@
 			image: 'images/refresh.png',
 			height: 5
 		});
-		refresh_button.addEventListener('click', fs.ui.refreshLikeList);
+		refresh_button.addEventListener('click', fs.ui.refreshAllFriendsLikeList);
+		
+		var friend_selector_button = fs.ui.friendSelectorButton();
 		
 		var win = Ti.UI.createWindow({
 			barColor: fs.ui.styles.navBarColour,
 			title: 'Sphnx',
     		tabBarHidden: true,
-    		leftNavButton: refresh_button
-//    		rightNavButton: login_button
+    		leftNavButton: refresh_button,
+			rightNavButton: friend_selector_button
 		});
 		var loading = fs.ui.createLoadingView();
 		win.add(loading);

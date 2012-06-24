@@ -58,7 +58,9 @@
 	function create_row( key )
 	{
 		// Reason for Factory: templating format of the row
-		var row = Ti.UI.createTableViewRow();
+		var row = Ti.UI.createTableViewRow(/*{
+			hasChild: true // messes up the layout currently. Try later.
+		}*/);
 
 		row.addEventListener('click', function(e) {
 			Ti.UI.currentTabGroup.activeTab.open(fs.ui.createWebViewWin({
@@ -205,14 +207,9 @@
 		//Ti.App.fireEvent('app:show.loader');
 		
 		Ti.API.addEventListener("processFriendIDs", function(e) {
-			Ti.API.info(e.data);
 			fs.data.friends = Array();
 			for (var i = 0; i < e.data.length; i++) {
-				fs.data.friends[e.data[i].uid.toString()] = {uid: e.data[i].uid, pic: e.data[i].pic_square, name: e.data[i].name};
-			}
-			
-			for (key in fs.data.friends) {
-				Ti.API.info(key + ": " + fs.data.friends[key].name);
+				fs.data.friends[e.data[i].uid.toString()] = {uid: e.data[i].uid, pic: e.data[i].pic_square, name: e.data[i].name, selected: true};
 			}
 			
 			fs.core.queryAllFriendLikeIDsFQL();
@@ -300,10 +297,17 @@
 		return ll_view;
 	};
 	
-	fs.ui.refreshLikeList = function(e) {
+	fs.ui.refreshAllFriendsLikeList = function(e) {
 		if (Ti.Facebook.loggedIn) {
 			Ti.App.fireEvent('app:show.loader');
-			fs.core.queryAllFriendLikeIDsFQL(); // TODO: switch to friend_ids version of query
+			fs.core.queryFriendIDsFQL();
+		}
+	};
+
+	fs.ui.refreshLikeList = function(friend_ids) {
+		if (Ti.Facebook.loggedIn) {
+			Ti.App.fireEvent('app:show.loader');
+			fs.core.queryLikeIDsFQL(friend_ids);
 		}
 	};
 })();
