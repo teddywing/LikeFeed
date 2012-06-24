@@ -136,11 +136,28 @@
 		
 		// Ti.App.fireEvent('app:show.loader');
 		
-		Ti.API.addEventListener("processPosts", function(d) {
-			for ( key in d.data ) {
-				ll_view.appendRow( create_row( d.data[key] ) );
+		Ti.API.addEventListener("processFriendIDs", function(e) {
+			fs.data.friends = e.data;
+			fs.core.queryAllFriendLikeIDsFQL();
+		});
+				
+		Ti.API.addEventListener("processLikeIDs", function(e) {
+			Ti.API.info("processLikeIDs");
+			Ti.API.info(e.data);
+			for ( key in e.data ) {
+				// TODO: 0 go through all the page_ids and insert into a hashset/dictionary; update with latest create_time, and also ++; sort by latest time <- pbly need priority set, or jus filter after fact
+				//e.data[key].page_id
+				//e.data[key].created_time
 			}
 			
+			// TODO: disable the hide loader, and start slowly loading processLikes
+			Ti.App.fireEvent('app:hide.loader');
+		});
+				
+		Ti.API.addEventListener("processLikes", function(e) {
+			for ( key in e.data ) {
+				ll_view.appendRow(create_row(e.data[key]));
+			}			
 			Ti.App.fireEvent('app:hide.loader');
 		});
 				
@@ -150,9 +167,7 @@
 	fs.ui.refreshLikeList = function(e) {
 		if (Ti.Facebook.loggedIn) {
 			Ti.App.fireEvent('app:show.loader');
-			fs.core.queryAllFriendPostsFQL();
-		} else {
-			Ti.Facebook.fireEvent('login');
+			fs.core.queryAllFriendLikeIDsFQL(); // TODO: switch to friend_ids version of query
 		}
 	};
 })();

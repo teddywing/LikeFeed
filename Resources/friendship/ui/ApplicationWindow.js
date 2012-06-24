@@ -27,7 +27,19 @@
 		});
 		
 		win.add(fs.ui.createLikeList());
-		fs.ui.refreshLikeList();
+
+		Ti.API.addEventListener("processFQLError", function(e) {
+			alert(e.what);
+		});
+		
+		Ti.API.addEventListener("refreshAllData", function(e) {
+			if (Ti.Facebook.loggedIn) {
+				Ti.App.fireEvent('app:show.loader');
+				fs.core.queryFriendIDsFQL();
+			}
+		})
+		Ti.API.fireEvent("refreshAllData");
+		
 		tab_group.addTab(tab);
 		
 		return tab_group;
