@@ -12,7 +12,7 @@
 			borderRadius: 10
 		});
 		var loader = Ti.UI.createActivityIndicator({
-			style: Titanium.UI.iPhone.ActivityIndicatorStyle.BIG
+			style: (fs.app.isAndroid) ? null : Titanium.UI.iPhone.ActivityIndicatorStyle.BIG
 		});
 		
 		loading_view.add(background);
