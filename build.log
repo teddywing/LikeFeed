@@ -1,8 +1,15 @@
 Logfile initialized
+<<<<<<< HEAD
 [INFO] logfile = /Users/mimic/workspace/LikeFeed/build.log
 [DEBUG] /Users/mimic/Library/Application Support/Titanium/mobilesdk/osx/2.1.0.GA/android/builder.py simulator Sphnx /Users/mimic/Downloads/android-sdk-macosx /Users/mimic/workspace/LikeFeed com.sphnx.Sphnx 1 HVGA /127.0.0.1:51328
 [INFO] Building Sphnx for Android ... one moment
 [INFO] Titanium SDK version: 2.1.0 (06/28/12 12:16 6e3cab6)
+=======
+[INFO] logfile = /Users/me/Documents/Sphnx/LikeFeed/build.log
+[DEBUG] /Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py simulator LikeFeed /Users/me/Downloads/android-sdk-macosx /Users/me/Documents/Sphnx/LikeFeed com.likefeed.LikeFeed 4 HVGA 
+[INFO] Building LikeFeed for Android ... one moment
+[INFO] Titanium SDK version: 2.0.2 (05/30/12 10:21 2ff31a3)
+>>>>>>> 067fb3de7c22dab2df94061523bcb05575591d56
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
