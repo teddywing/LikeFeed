@@ -25,16 +25,7 @@
 		});
 		
 		done_button.addEventListener('click', function() {
-			var friend_ids = Array();
-			for (key in fs.data.friends) {
-				if (fs.data.friends[key].selected) {
-					friend_ids.push(fs.data.friends[key].uid);
-				}
-			}
-			if (friend_ids.length > 0) {
-				fs.ui.refreshLikeList(friend_ids);
-			}
-					
+			fs.ui.refreshFilteredLikeList();
 			win.close();
 		});
 		

@@ -1,24 +1,32 @@
 Logfile initialized
-[INFO] logfile = /Users/me/Desktop/LikeFeed/build.log
-[DEBUG] /Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py simulator LikeFeed /Users/me/Downloads/android-sdk-macosx /Users/me/Desktop/LikeFeed com.likefeed.LikeFeed 4 HVGA 
-[INFO] Building LikeFeed for Android ... one moment
-[DEBUG] signal caught: 3
-[DEBUG] calling emulator kill on 55988
-[ERROR] Exception occured while building Android project:
-[ERROR] Traceback (most recent call last):
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 2112, in <module>
-[ERROR]     s.run_emulator(avd_id, avd_skin, avd_name, add_args)
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 484, in run_emulator
-[ERROR]     handler(3,None)
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 469, in handler
-[ERROR]     os.kill(p.pid, signal.SIGTERM)
-[ERROR] OSError: [Errno 3] No such process
-[INFO] Titanium SDK version: 2.0.2 (05/30/12 10:21 2ff31a3)
+[INFO] logfile = /Users/mimic/workspace/LikeFeed/build.log
+[DEBUG] /Users/mimic/Library/Application Support/Titanium/mobilesdk/osx/2.1.0.GA/android/builder.py simulator Sphnx /Users/mimic/Downloads/android-sdk-macosx /Users/mimic/workspace/LikeFeed com.sphnx.Sphnx 1 HVGA /127.0.0.1:51328
+[INFO] Building Sphnx for Android ... one moment
+[INFO] Titanium SDK version: 2.1.0 (06/28/12 12:16 6e3cab6)
 [DEBUG] Waiting for device to be ready ...
-[TRACE] adb devices returned 0 devices/emulators
-[TRACE] adb devices returned 0 devices/emulators
-[TRACE] adb devices returned 0 devices/emulators
-[TRACE] adb devices returned 0 devices/emulators
-[TRACE] adb devices returned 0 devices/emulators
-[TRACE] adb devices returned 0 devices/emulators
-[ERROR] Timed out waiting for emulator to be ready, you may need to close the emulator and try again
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 0 seconds)
+[DEBUG] waited 0.012860 seconds on emulator to get ready
+[DEBUG] com.sphnx.Sphnx installed? True
+[INFO] Fastdev server running, deploying in Fastdev mode
+[INFO] Copying CommonJS modules...
+[INFO] Copying project resources..
+[INFO] Tiapp.xml unchanged, skipping class generation
+[DEBUG] Processing Android resource drawables
+[DEBUG] found drawable-long-land-hdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-long-land-hdpi/default.png
+[DEBUG] found drawable-long-land-ldpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-long-land-ldpi/default.png
+[DEBUG] found drawable-long-port-hdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-long-port-hdpi/default.png
+[DEBUG] found drawable-long-port-ldpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-long-port-ldpi/default.png
+[DEBUG] found drawable-notlong-land-hdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-land-hdpi/default.png
+[DEBUG] found drawable-notlong-land-ldpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-land-ldpi/default.png
+[DEBUG] found drawable-notlong-land-mdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-land-mdpi/default.png
+[DEBUG] found drawable-notlong-port-hdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-port-hdpi/default.png
+[DEBUG] found drawable-notlong-port-ldpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-port-ldpi/default.png
+[DEBUG] found drawable-notlong-port-mdpi splash screen at /Users/mimic/workspace/LikeFeed/Resources/android/images/res-notlong-port-mdpi/default.png
+[INFO] Waiting for SDCard to become available..
+[INFO] Re-launching application ... Sphnx
+[INFO] Launching application ... Sphnx
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.sphnx.Sphnx/.SphnxActivity }
+
+[INFO] Forwarding host port 51328 to device for debugging.
+[DEBUG] signal caught: 15

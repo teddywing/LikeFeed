@@ -6,7 +6,7 @@
 		Ti.Facebook.addEventListener('login', function(e) {
 			if (e.success) {
 				fs.app.mainTabGroup.open();
-				Ti.API.fireEvent("refreshAllData");
+				Ti.App.fireEvent("refreshAllData");
 			} else {
 				alert('Could not log into Facebook');
 			}

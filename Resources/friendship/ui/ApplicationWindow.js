@@ -8,7 +8,7 @@
 			image: 'images/refresh.png',
 			height: 5
 		});
-		refresh_button.addEventListener('click', fs.ui.refreshAllFriendsLikeList);
+		refresh_button.addEventListener('click', fs.ui.refreshFilteredLikeList);
 		
 		var friend_selector_button = fs.ui.friendSelectorButton();
 		
@@ -30,17 +30,17 @@
 		
 		win.add(fs.ui.createLikeList());
 
-		Ti.API.addEventListener("processFQLError", function(e) {
+		Ti.App.addEventListener("processFQLError", function(e) {
 			alert(e.what);
 		});
 		
-		Ti.API.addEventListener("refreshAllData", function(e) {
+		Ti.App.addEventListener("refreshAllData", function(e) {
 			if (Ti.Facebook.loggedIn) {
 				Ti.App.fireEvent('app:show.loader');
 				fs.core.queryFriendIDsFQL();
 			}
 		})
-		Ti.API.fireEvent("refreshAllData");
+		Ti.App.fireEvent("refreshAllData");
 		
 		tab_group.addTab(tab);
 		

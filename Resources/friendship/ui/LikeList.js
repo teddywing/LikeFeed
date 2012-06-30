@@ -68,7 +68,7 @@
 				url: key.page_url
 			}));
 		});
-		
+
 		var profile_icon = Ti.UI.createImageView({
 			image:key.pic_square,
 			width:50,
@@ -206,7 +206,8 @@
 		
 		//Ti.App.fireEvent('app:show.loader');
 		
-		Ti.API.addEventListener("processFriendIDs", function(e) {
+		Ti.App.addEventListener("processFriendIDs", function(e) {
+			//Ti.API.info("processFriendIDs callback");
 			fs.data.friends = Array();
 			for (var i = 0; i < e.data.length; i++) {
 				fs.data.friends[e.data[i].uid.toString()] = {uid: e.data[i].uid, pic: e.data[i].pic_square, name: e.data[i].name, selected: true};
@@ -215,7 +216,8 @@
 			fs.core.queryAllFriendLikeIDsFQL();
 		});
 				
-		Ti.API.addEventListener("processLikeIDs", function(e) {
+		Ti.App.addEventListener("processLikeIDs", function(e) {
+			//Ti.API.info("processLikeIDs callback");
 			fs.data.likeIDs = Array();
             fs.data.reverseChronoLikedIDs = Array();
 
@@ -260,14 +262,14 @@
 	   			fs.core.fetchMoreLikes(fs.data.NUM_LIKES_PER_FETCH);
 	   		} else {
 	   			fs.data.isQueryingMore = false;
-	   			ll_view.footerTitle = "0 / 0 loaded";
+	   			ll_view.footerTitle = "loading failed";
 				Ti.App.fireEvent('app:hide.loader');
 	   		} 
 		});
 				
-		Ti.API.addEventListener("processLikes", function(e) {
+		Ti.App.addEventListener("processLikes", function(e) {
+			//Ti.API.info("processLikes callback");
 			for ( key in e.data ) {
-				
 				e.data[key].more = fs.data.reverseChronoLikedIDs[fs.data.numLikesFetched];
 				e.data[key].friend_name = friend_name_from_uid(e.data[key].more.uid);		
 				fs.data.numLikesFetched++;
@@ -304,10 +306,22 @@
 		}
 	};
 
-	fs.ui.refreshLikeList = function(friend_ids) {
+	fs.ui.refreshLikeList = function(friend_ids) { // called by fs.ui.refreshFilteredLikeList; do not call directly unless you know friend_ids
 		if (Ti.Facebook.loggedIn) {
 			Ti.App.fireEvent('app:show.loader');
 			fs.core.queryLikeIDsFQL(friend_ids);
+		}
+	};
+	
+	fs.ui.refreshFilteredLikeList = function() {
+		var friend_ids = Array();
+		for (key in fs.data.friends) {
+			if (fs.data.friends[key].selected) {
+				friend_ids.push(fs.data.friends[key].uid);
+			}
+		}
+		if (friend_ids.length > 0) {
+			fs.ui.refreshLikeList(friend_ids);
 		}
 	};
 })();

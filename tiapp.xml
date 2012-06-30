@@ -13,7 +13,7 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>1.6.2</sdk-version>
+    <sdk-version>1.8.3.v20120529164726</sdk-version>
     <id>com.sphnx.Sphnx</id>
     <name>Sphnx</name>
     <version>1.0</version>
