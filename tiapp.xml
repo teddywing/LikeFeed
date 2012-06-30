@@ -8,13 +8,13 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>1.6.2</sdk-version>
-    <id>com.likefeed.LikeFeed</id>
-    <name>LikeFeed</name>
+    <id>com.sphnx.Sphnx</id>
+    <name>Sphnx</name>
     <version>1.0</version>
-    <publisher>TW</publisher>
+    <publisher>ZANT</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2012 by TW</copyright>
+    <copyright>2012 by ZANT</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
