@@ -14,7 +14,7 @@
 	fs.ui.createFriendSelector = function() {
 		var done_button = Ti.UI.createButton({
 			title: 'Done',
-			style: Titanium.UI.iPhone.SystemButtonStyle.DONE
+			style: (fs.app.isAndroid) ? null : Titanium.UI.iPhone.SystemButtonStyle.DONE
 		});
 		
 		var win = Ti.UI.createWindow({
@@ -95,7 +95,7 @@
 			width: 240
 		});
 		var flexSpace = Titanium.UI.createButton({
-			systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
+			systemButton: (fs.app.isAndroid) ? null : Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 		});
 		var toolbar = Ti.UI.createToolbar({
 			barColor: fs.ui.styles.navBarColour,
