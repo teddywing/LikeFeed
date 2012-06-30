@@ -141,8 +141,8 @@
 			height:'auto'
 		});
 
-		liked_by.left = 320 - liked_by.width;
-
+		liked_by.left = Ti.Platform.displayCaps.platformWidth - liked_by.width - Ti.Platform.displayCaps.platformWidth / 170;
+				
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
 		if( key.description.indexOf('.') > 0 ){
 			key.description = key.description.substr( 0, key.description.indexOf('.') + 1 ) ;
