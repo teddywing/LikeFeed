@@ -13,15 +13,9 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-<<<<<<< HEAD
     <sdk-version>1.6.2</sdk-version>
     <id>com.sphnx.Sphnx</id>
     <name>Sphnx</name>
-=======
-    <sdk-version>2.0.2.GA</sdk-version>
-    <id>com.likefeed.LikeFeed</id>
-    <name>LikeFeed</name>
->>>>>>> 4bcaa02ba3536316e32cb106ef2fc1a77f205b8b
     <version>1.0</version>
     <publisher>ZANT</publisher>
     <url>http://</url>
