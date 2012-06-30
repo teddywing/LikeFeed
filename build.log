@@ -1,18 +1,7 @@
 Logfile initialized
-[INFO] logfile = /Users/me/Desktop/LikeFeed/build.log
-[DEBUG] /Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py simulator LikeFeed /Users/me/Downloads/android-sdk-macosx /Users/me/Desktop/LikeFeed com.likefeed.LikeFeed 4 HVGA 
+[INFO] logfile = /Users/me/Documents/Sphnx/LikeFeed/build.log
+[DEBUG] /Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py simulator LikeFeed /Users/me/Downloads/android-sdk-macosx /Users/me/Documents/Sphnx/LikeFeed com.likefeed.LikeFeed 4 HVGA 
 [INFO] Building LikeFeed for Android ... one moment
-[DEBUG] signal caught: 3
-[DEBUG] calling emulator kill on 55988
-[ERROR] Exception occured while building Android project:
-[ERROR] Traceback (most recent call last):
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 2112, in <module>
-[ERROR]     s.run_emulator(avd_id, avd_skin, avd_name, add_args)
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 484, in run_emulator
-[ERROR]     handler(3,None)
-[ERROR]   File "/Users/me/Library/Application Support/Titanium/mobilesdk/osx/2.0.2.GA/android/builder.py", line 469, in handler
-[ERROR]     os.kill(p.pid, signal.SIGTERM)
-[ERROR] OSError: [Errno 3] No such process
 [INFO] Titanium SDK version: 2.0.2 (05/30/12 10:21 2ff31a3)
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 0 devices/emulators
