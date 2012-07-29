@@ -37,6 +37,7 @@
 		Ti.App.addEventListener("refreshAllData", function(e) {
 			if (Ti.Facebook.loggedIn) {
 				Ti.App.fireEvent('app:show.loader');
+				Ti.App.fireEvent('app:msg.loader', {text:"Loading up..."});
 				fs.core.queryFriendIDsFQL();
 			}
 		})

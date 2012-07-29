@@ -1,4 +1,5 @@
 (function() {
+		
 	var MAX_ROW_HEIGHT = 150;
 	var lookup = {
 		'BOOK':'#b0d3a4', 
@@ -128,6 +129,7 @@
 
 		var liked_by = Ti.UI.createLabel({
 			text: key.friend_name,
+			//text: key.uid,
 			font:{fontSize:11,fontWeight:'single'},
 			
 			//color: 'white',
@@ -196,6 +198,7 @@
 	};
 	
 	fs.ui.createLikeList = function() {
+				
 		var ll_view = Ti.UI.createTableView();
 		ll_view.maxRowHeight = MAX_ROW_HEIGHT;
 		
@@ -207,9 +210,11 @@
 		//Ti.App.fireEvent('app:show.loader');
 		
 		Ti.App.addEventListener("processFriendIDs", function(e) {
-			//Ti.API.info("processFriendIDs callback");
+			Ti.API.info("processFriendIDs callback");
 			fs.data.friends = Array();
 			for (var i = 0; i < e.data.length; i++) {
+				Ti.App.fireEvent('app:msg.loader', {text:"processFriendIDs: " + i });
+
 				fs.data.friends[e.data[i].uid.toString()] = {uid: e.data[i].uid, pic: e.data[i].pic_square, name: e.data[i].name, selected: true};
 			}
 			
@@ -217,7 +222,9 @@
 		});
 				
 		Ti.App.addEventListener("processLikeIDs", function(e) {
-			//Ti.API.info("processLikeIDs callback");
+			Ti.API.info("processLikeIDs callback");
+			Ti.App.fireEvent('app:msg.loader', {text:"processLikeIDs"});
+
 			fs.data.likeIDs = Array();
             fs.data.reverseChronoLikedIDs = Array();
 
@@ -225,6 +232,8 @@
 				pid = e.data[key].page_id + '';
 				tm = e.data[key].created_time;
 				uid = e.data[key].uid;
+
+				output_log( "Processing: pid = " + pid + ", uid = " + uid );
 				
 				if (pid in fs.data.likeIDs) {
 					fs.data.likeIDs[pid].count += 1;
@@ -268,13 +277,26 @@
 		});
 				
 		Ti.App.addEventListener("processLikes", function(e) {
-			//Ti.API.info("processLikes callback");
+			Ti.API.info("processLikes callback");
+			Ti.App.fireEvent('app:msg.loader', {text:"Process_likes - Callback."});
+
 			for ( key in e.data ) {
-				e.data[key].more = fs.data.reverseChronoLikedIDs[fs.data.numLikesFetched];
-				e.data[key].friend_name = friend_name_from_uid(e.data[key].more.uid);		
+				Ti.App.fireEvent('app:msg.loader', {text:"Process_likes - " + key });
+
+				//e.data[key].friend_name = friend_name_from_uid(e.data[key].more.uid);
+				var page_id = e.data[key].page_id;
+				e.data[key].friend_name = friend_name_from_uid( fs.data.likeIDs[page_id].uid );
+				output_log( "Page ID: " + page_id.toString()  + 
+				            " -> uid: " + fs.data.likeIDs[page_id].uid + 
+				            " -> friend: " + friend_name_from_uid( fs.data.likeIDs[page_id].uid ) );		
+				//e.data[key].friend_name = "----aaaa----";		
+
 				fs.data.numLikesFetched++;
 				ll_view.appendRow(create_row(e.data[key]));
 			}
+
+			// Moved from inside the loop.  Is this ok?
+			e.data[key].more = fs.data.reverseChronoLikedIDs[fs.data.numLikesFetched];
 			
   			ll_view.footerTitle = fs.data.numLikesFetched + " / " + fs.data.reverseChronoLikedIDs.length + " loaded";
   			fs.data.isQueryingMore = false;
