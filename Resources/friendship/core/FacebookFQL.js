@@ -65,9 +65,7 @@
 
 		Ti.App.fireEvent('app:msg.loader', {text:"Pulling all friends' likes."});
 
-		// BAH!  Why is the result from this query via API different from the result on
-		// https://developers.facebook.com/tools/explorer?fql=SELECT%20page_id%2C%20created_time%2C%20uid%20FROM%20page_fan%20WHERE%20uid%20IN%20(SELECT%20uid2%20FROM%20friend%20WHERE%20uid1%20%3D%20me())%20limit%205
-		var query = "SELECT page_id, created_time, uid FROM page_fan WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me() ) limit 5"; // " + Ti.Facebook.uid + " // and created_time > " + ts;
+		var query = "SELECT page_id, created_time, uid FROM page_fan WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = " + Ti.Facebook.uid + " )";  // and created_time > " + ts;
 		output_log( query );
 		Ti.Facebook.request('fql.query', {query: query}, fs.core.handleAllFriendLikeIDsFQLResponse);
 	};
