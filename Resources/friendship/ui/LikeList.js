@@ -34,6 +34,7 @@
 		ll_view.appendRow( 
 			create_row( {
 				pic_square: "images/fb_test_profile.jpg",
+				friend_name: "Person",
 				name: "Test Name",
 				description: "Description Description Description. Description Description Description Description Description Description Description Description Description ",
 				fan_count: "1000000000000000", 
@@ -47,6 +48,7 @@
 			create_row( {
 				pic_square: "images/fb_test_profile.jpg",
 				name: "Test Name",
+				friend_name: "Person",
 				description: "Description Description Description Description Description Description Description Description Description Description Description Description ",
 				fan_count: "2", 
 				page_url: "http://www.google.com",
@@ -109,21 +111,23 @@
 			font:{fontSize:11,fontWeight:'single'},
 			color:'white',
 			backgroundColor: getTypeColor( key.type ),
-			width:'auto',
+			width:Ti.UI.SIZE,
 			textAlign:'left',
 			top:2,
 			left: profile_icon.width + 12,
-			height:'auto'
+			height:Ti.UI.SIZE
 		});
-		 
+
+		row.item_type = item_type;
+		
 		var title = Ti.UI.createLabel({
 			text:key.name,
 			font:{fontSize:16,fontWeight:'bold'},
-			width:'auto',
+			width:Ti.UI.FILL,
 			textAlign:'left',
-			top:item_type.height + 2,
-			left: profile_icon.width + 14,
 			height:18,
+			left: profile_icon.width + 12,
+			top: 16 + 16, // this should be a relative position: item_type.size.height + 
 			wordWrap:false
 		});
 
@@ -134,16 +138,14 @@
 			
 			//color: 'white',
 			//backgroundColor:"#d1d5e0",
-			
+			textAlign: 'left',
 			color: '#aaaaaa',
-			
-			width:'auto',
-			textAlign:'left',
-			top:2,
-			height:'auto'
+			left:profile_icon.width + 14,			
+			width:Ti.UI.SIZE,
+			top:16,
+			height:Ti.UI.SIZE
 		});
 
-		liked_by.left = Ti.Platform.displayCaps.platformWidth - liked_by.width - Ti.Platform.displayCaps.platformWidth / 170;
 				
 		key.description = key.description.replace(/<(?:.|\n)*?>/gm, '');
 		if( key.description.indexOf('.') > 0 ){
@@ -154,32 +156,29 @@
 			text:key.description,
 			font:{fontSize:14,fontWeight:'single'},
 			height: 15,
-			width:'auto',
+			width:Ti.UI.FILL,
 			textAlign:'left',
-			top: title.top + title.height,
 			left:profile_icon.width + 14,
-			height:'auto',
+			height:Ti.UI.SIZE,
+			top: 16 + 16 + 16,
 			wordWrap:true
 		});
 		
 		var max_height = MAX_ROW_HEIGHT - description.top;
 		
-		if( description.height > max_height ) description.height = max_height; 
-		
-		
 		var item_view = Ti.UI.createView({
-			height: 'auto',
+			height: Ti.UI.SIZE,
 			top: 5,
 			bottom: 5
 		});
 
-		row.height = 'auto';
+		row.height = Ti.UI.SIZE;
 		
-		item_view.add( profile_icon );
 		// row.add( thumb_icon );
-		item_view.add(fan_c);
+		item_view.add( profile_icon );
+		item_view.add( fan_c);
 		item_view.add( title );
-		item_view.add(liked_by);
+		item_view.add( liked_by);
 		item_view.add( item_type );
 		item_view.add( description );
 		
@@ -205,8 +204,7 @@
 		var loading = fs.ui.createLoadingView();
 		ll_view.add(loading);
 		
-		//add_test_data( ll_view );
-		
+		// add_test_data( ll_view );
 		//Ti.App.fireEvent('app:show.loader');
 		
 		Ti.App.addEventListener("processFriendIDs", function(e) {
